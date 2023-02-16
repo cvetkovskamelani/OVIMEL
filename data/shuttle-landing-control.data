@@ -1,9 +1,0 @@
-Stability,Wind,Magnitude,Visibility,Landing
-stab,head,low,no,auto
-xstab,tail,low,yes,manual
-stab,tail,low,yes,manual
-xstab,head,medium,yes,manual
-stab,head,low,yes,auto
-stab,tail,medium,yes,auto
-stab,head,medium,yes,auto
-stab,head,medium,no,manual
