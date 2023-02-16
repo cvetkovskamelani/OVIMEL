@@ -1,0 +1,174 @@
+** Множество(set) vs листа(list) **
+множеството е многу по ефикасно и побрзо
+Обична листа (list) и heapify редица (heapq.heapify(queue))
+heapify на паметен начин ги распределува елементите и по ефективно работи
+листата ќе зема премногу меморија за нејзините акции да сортира
+
+** а* користи дојава(евристика) наспроти пребарување со униформна цена **
+проценката треба да е помала од најкраткото растојание
+кај пребарување со униформа цена ставаме торка (далечина,листа од пат) во приоритетната редица и со heapq.pop ја вадиме ако има најмала цена
+кај а* ставаме торка(торка(вкупно цена(цена на пат+евристика), цена на пат),листа од пат)
+
+** Движење по матрица **
+yield ги прави пребарувањата генераторски функции, цело време генерираат по нешто, има слична улога како ретурн, враќа нешто некаде
+
+
+** Разлика во претворање на тапл од тапл во листа **
+
+g  = (
+    (0, 3, 2, 0, 2, 2, 2),
+    (2, 1, 2, 2, 2, 3, 2),
+    (2, 2, 0, 2, 2, 2, 2),
+    (0, 2, 2, 2, 2, 2, 0),
+    (2, 2, 3, 2, 2, 2, 2),
+    (2, 2, 1, 2, 2, 2, 2),
+    (0, 3, 0, 2, 2, 2, 2)
+)
+state_list = []
+for row in g:
+    state_list.append(list(row))
+state_list
+[[0, 3, 2, 0, 2, 2, 2],
+ [2, 1, 2, 2, 2, 3, 2],
+ [2, 2, 0, 2, 2, 2, 2],
+ [0, 2, 2, 2, 2, 2, 0],
+ [2, 2, 3, 2, 2, 2, 2],
+ [2, 2, 1, 2, 2, 2, 2],
+ [0, 3, 0, 2, 2, 2, 2]]
+ 
+state=list(g)
+state
+[(0, 3, 2, 0, 2, 2, 2),
+ (2, 1, 2, 2, 2, 3, 2),
+ (2, 2, 0, 2, 2, 2, 2),
+ (0, 2, 2, 2, 2, 2, 0),
+ (2, 2, 3, 2, 2, 2, 2),
+ (2, 2, 1, 2, 2, 2, 2),
+ (0, 3, 0, 2, 2, 2, 2)]
+ 
+# printanje tuple of tuples
+for i, row in statee:
+       for j,col in row:
+             print(col)
+for row, i in enumerate(statee):
+       for col, j in enumerate(i):
+                 print(statee[row][col])
+statee= (
+    ('o', 'x', 'x'),
+    ('·', 'x', '·'),
+    ('o', '.', 'o')
+)                 
+# Output of the first loop
+o
+x
+x
+·
+x
+·
+o
+.
+o
+
+# Output of the second loop
+o
+·
+o
+x
+x
+.
+x
+·
+o
+
+ The first loop iterates over each element in the statee tuple and prints each element one at a time. 
+ The second loop iterates over each row and column index of the statee tuple, and then uses the indices to access and print the corresponding element.
+ The first loop will print the elements row by row, while the second loop will print the elements column by column.
+
+
+** Pandas **
+import pandas as pd
+
+# df = dataframe = tabela
+# tabela['Ime_na_kolona'] gi dava vrednostite od kolonata
+
+files = pd.read_csv('data/roads/roads_info.csv')['Кратенка'] #gi dava vrednostite od kolonata Kratenka
+print(files[:5])
+
+# iako files ne e lista ili torka, koke se izminva niz nego, se zemat
+# elementite kako da bi se zemale od lista/torka
+for file in files[:5]:
+    print(file)
+    
+df = pd.read_csv('data/roads/A2.csv')
+df['OD'] = df['ЈАЗОЛ НА ПОЧЕТОКОТ'] # dodava nova kolona sho gi ima vrednotite od 'ЈАЗОЛ НА ПОЧЕТОКОТ'
+// vnimavaj koga pravish klasifikator kaj x da ja dropnesh i kolonata shto ja davash na y
+
+# tabela['Ime_na_kolona'] gi dava vrednostite od kolonata
+print(list(df['OD'][:5]))
+print(list(df.OD[:5]))
+
+# so itertuples se iterira niz redicite od tabelata, 
+#za edna redica se dobiva tuple sho e slicno na recnik (sodrzi ime na kolona = element vo taa kolona). 
+#Do elementot se pristapva so row.Ime_na_kolona (imeto ne mozi da sodrzi prazno mesto)
+for row in df.itertuples():
+    print(row.OD)
+    break
+print()
+    
+# df.query('Ime_na_kolona == element_od_taa_kolona') ja dava redicata kade shto go ima element_od_taa_kolona
+cela_redica = df.query('ДОЛЖИНА == 7340')
+print(cela_redica)
+print()
+print(cela_redica.СЕКЦИЈА)
+
+
+
+#dodavanje kolona
+df=df.join(ime na kolona)
+
+
+
+ 
+** наивен бајесов кога се прави дрво од тип пајплајн **
+ clf = Pipeline([
+    ('vectorizer', CountVectorizer()), #broi zbor kolku pati se javuva i go prakja na TfidfTransformer
+    ('tfidf', TfidfTransformer()),     #broi sekoj zbor so koja frekfencija se sluchuva (zbor/vk. br. zborovi) i smestuva vo tfidf pa prakja na MultinomialNB
+    ('clf', MultinomialNB(alpha=1e-3)),#alfa e laplasovata korekcija, nie stavame najchesto 1
+])
+
+# drvo od tip vektorajzer
+vectorizer = CountVectorizer()
+X = vectorizer.fit_transform(test_dataset)
+
+# drvo od tip decision tree
+classifier = DecisionTreeClassifier()
+classifier.fit(X, test_labels)
+
+# crtanje drvo do dlabochina
+from sklearn import tree
+tree.plot_tree(classifier, max_depth=3, fontsize=7, feature_names=feature_names)
+ 
+# crtanje drvo
+import matplotlib.pyplot as plt
+plt.figure(figsize = (30, 30))
+tree.plot_tree(clf, fontsize=20, feature_names=x.columns, filled = True, class_names=['лошо', 'добро'])
+plt.show()
+
+** функција за тоа дали некоја позиција е валидна **
+def valid(position):
+    x,y=position
+    if 0<=x<N and 0<=y<N:
+        return True
+    else: return False
+    
+pretvoranje tuple od tuple vo lista od listi
+states=[]
+for row in state:
+        states.append(list(row))
+        
+pretvoranje lista od listi vo lista od tuple
+state_tuple=[]
+    for row in states:
+        state_tuple.append(tuple(row))
+-sega za da bide tuple od tuple
+tuple(state_tuple)
